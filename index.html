@@ -314,9 +314,9 @@
           responses // obiect cu fiecare întrebare: {answer, correct}
         };
 
-        // trimitem la Firestore
+        // trimitem la Firestore (colecția schimbată la "Chestionar")
         try {
-          await addDoc(collection(db, "test_responses"), payload);
+          await addDoc(collection(db, "Chestionar"), payload);
           status.textContent = 'Test trimis și înregistrat.';
         } catch (err) {
           console.error('Firestore write error', err);
@@ -430,7 +430,7 @@
       async function loadResponses(){
         responsesList.innerHTML = 'Se încarcă...';
         try {
-          const q = query(collection(db, "test_responses"), orderBy("timestamp","desc"));
+          const q = query(collection(db, "Chestionar"), orderBy("timestamp","desc"));
           const snap = await getDocs(q);
           if(snap.empty){ responsesList.innerHTML = '<div class="muted">Niciun test încă.</div>'; return; }
           const out = [];
@@ -458,7 +458,7 @@
             btn.addEventListener('click', async (ev)=>{
               const id = ev.target.getAttribute('data-id');
               try {
-                await deleteDoc(doc(db, "test_responses", id));
+                await deleteDoc(doc(db, "Chestionar", id));
                 await loadResponses();
               } catch(err){ console.error('Delete error', err); alert('Eroare la ștergere.'); }
             });
